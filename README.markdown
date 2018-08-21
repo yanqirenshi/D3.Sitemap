@@ -1,6 +1,6 @@
-# d3.sitemap
+# d3.pad
 
-サイトマップスケッチするためのライブラリです。
+PADをケッチするためのライブラリです。
 
 # Usage
 
@@ -32,4 +32,4 @@ This software is released under the GNU GENERAL PUBLIC LICENSE Version 3, see [L
 
 # References
 
-- [Web制作の参考になる！サイトマップやハイレベルサイトマップ、フローチャートなどのまとめ](https://coliss.com/articles/build-websites/operation/work/awesome-sitemap-and-flowchart.html)
+- [プログラム構造表記法（PAD）](http://itdoc.hitachi.co.jp/manuals/3020/3020378270/LANG0027.HTM)
