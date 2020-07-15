@@ -36,13 +36,32 @@ export default class D3Sitemap {
         this._layerBackground = null;
     }
     init (params) {
-        // D3SVG
         this.selector = params.svg.selector;
+
         this.w = params.svg.w || 0;
         this.h = params.svg.h || 0;
         this.look = params.svg.look || { at: { x:0, y:0 }, };
         this.scale = params.svg.scale || 1;
 
+        return this;
+    }
+    /* ******** */
+    /*  SVG     */
+    /* ******** */
+    makeSvg () {
+        let d3svg = new D3Svg();
+
+        d3svg.init({
+            d3_element: this.selector,
+            w:     this.w,
+            h:     this.h,
+            look:  this.look,
+            scale: this.scale,
+        });
+
+        return d3svg;
+    }
+    initSvg () {
         const svg = this.getSvgElement();
 
         this._node.addFilterShadow(svg);
@@ -64,22 +83,6 @@ export default class D3Sitemap {
 
         return this;
     }
-    /* ******** */
-    /*  SVG     */
-    /* ******** */
-    makeSvg () {
-        let d3svg = new D3Svg();
-
-        d3svg.init({
-            d3_element: this.selector,
-            w:     this.w,
-            h:     this.h,
-            look:  this.look,
-            scale: this.scale,
-        });
-
-        return d3svg;
-    }
     getSvg () {
         if (this._d3svg)
             return this._d3svg;
@@ -87,6 +90,8 @@ export default class D3Sitemap {
         this._d3svg = this.makeSvg();
 
         this.makeLayers();
+
+        this.initSvg();
 
         return this._d3svg;
     }
