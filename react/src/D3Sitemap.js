@@ -1,4 +1,5 @@
 import D3Svg from '@yanqirenshi/d3.svg';
+
 import { DrawerGeometry, DrawerHierarchy } from './Drawer.js';
 
 import D3SitemapNode from './D3SitemapNode.js';
@@ -52,9 +53,7 @@ export default class D3Sitemap {
         let d3svg = new D3Svg();
 
         d3svg.init({
-            d3_element: this.selector,
-            w:     this.w,
-            h:     this.h,
+            selector: this.selector,
             look:  this.look,
             scale: this.scale,
         });
@@ -97,6 +96,23 @@ export default class D3Sitemap {
     }
     getSvgElement () {
         return this.getSvg().d3Element();
+    }
+    svgSize(w, h) {
+        const d3svg = this.getSvg();
+
+        if (!d3svg)
+            return;
+
+        d3svg.size(w, h);
+    }
+    focus() {
+        this.getSvg().focus();
+    }
+    isInitialized() {
+        if (!this._d3svg)
+            return false;
+
+        return this._d3svg.isInitialized();
     }
     /* ******** */
     /*  Layers  */
@@ -324,6 +340,8 @@ export default class D3Sitemap {
             this.fittingEdge(edge);
 
         this.draw();
+
+        this.focus();
 
         return this;
     }

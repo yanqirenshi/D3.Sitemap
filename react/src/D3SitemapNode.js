@@ -1,8 +1,12 @@
+import NodeLink from './NodeLink.js';
+
 import { DrawerHierarchy } from './Drawer.js';
 
 export default class D3SitemapNode {
     constructor() {
         this.drawer = new DrawerHierarchy();
+
+        this.node_link = new NodeLink();
     }
     ///// ////////////////////////////////////////////////////////////////
     /////   Utility
@@ -60,10 +64,7 @@ export default class D3SitemapNode {
         if (core.type)
             data.type = core.type;
 
-        if (core.link)
-            data.link = core.link;
-        else
-            data.link = { url: null };
+        data.link = this.node_link.normalize(core.link);
     }
     normalize (data) {
         if (!data)
@@ -233,6 +234,7 @@ export default class D3SitemapNode {
     }
     drawLink (groups) {
         let a_element = groups
+            .filter((d) => d.link)
             .append('a')
             .attr('class', 'link-alt')
             .attr('href', (d) => {
@@ -251,24 +253,34 @@ export default class D3SitemapNode {
             .style('color', '#888888');
 
         a_element
+            .filter((d) => d.link.icon)
+            .append('image')
+            .attr('x', (d) => d.link.position.x )
+            .attr('y', (d) => d.link.position.y )
+            .attr('width',  (d) => d.link.rectangle.w )
+            .attr('height', (d) => d.link.rectangle.h )
+            .attr('xlink:href', (d) => d.link.icon );
+
+        a_element
+            .filter((d) => !d.link.icon)
             .append('text')
-            .attr('x', (d) => { return 10;})
+            .attr('x', (d) => {
+                return d.link.position.x;
+            })
             .attr('y', (d) => {
-                return d.size.h - 10;
+                return d.link.position.y;
             })
             .style("font-size", (d) => {
                 return '12px';
             })
             .style("display", (d) => {
+                console.log(d.link);
                 if (!d.link.url)
                     return 'none';
 
                 return 'block';
             })
             .text((d) => {
-                if (!d.link.url)
-                    return '';
-
                 return 'link';
             });
     }

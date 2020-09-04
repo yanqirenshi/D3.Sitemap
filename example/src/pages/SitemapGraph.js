@@ -9,8 +9,6 @@ function SitemapGraph (props) {
     const [d3sitemap] = useState(new D3Sitemap().init({
         svg: {
             selector: '#sitemap-graph',
-            w: 1024,
-            h: 333,
         },
     }));
 
@@ -19,6 +17,10 @@ function SitemapGraph (props) {
             nodes: NODE_DATA,
             edges: EDGE_DATA,
         });
+    });
+
+    window.addEventListener("resize", () => {
+        d3sitemap.focus();
     });
 
     const style = {
@@ -35,10 +37,7 @@ function SitemapGraph (props) {
     return (
         <>
           <div style={style.root}>
-            <svg id='sitemap-graph'
-                 width='1024px'
-                 height='333px' />
-
+            <svg id='sitemap-graph'/>
           </div>
           <div style={style.operators}>
           </div>

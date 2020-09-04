@@ -20,7 +20,6 @@ const NODE_DATA = [
                 position: { x:100, y:100 },
                 children: [],
                 id: 3,
-                link: { url: 'https://twitter.com/home' },
             },
         ],
         id: 1,
@@ -46,6 +45,13 @@ const NODE_DATA = [
                 position: { x:50, y:50 },
                 children: [],
                 id: 4,
+                link: {
+                    url: 'https://twitter.com/home',
+                    position: {
+                        x: 200 - 26,
+                    },
+                    icon: 'https://timchin.com/wp-content/plugins/genericond/icons/genericons-neue/svg/external.svg',
+                },
             },
         ],
         id: 2,
