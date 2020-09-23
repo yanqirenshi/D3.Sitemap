@@ -38,7 +38,7 @@ export default class D3SitemapNode {
     ///// ////////////////////////////////////////////////////////////////
     dataTemplate () {
         return {
-            type: '',
+            type: null,
             label: {
                 contents: '',
                 position: { x: 20, y: 20 },
@@ -61,8 +61,7 @@ export default class D3SitemapNode {
         if (core.id || core.id===0)
             data._id = core.id;
 
-        if (core.type)
-            data.type = core.type;
+        data.type = core.type || 'NODE';
 
         data.link = this.node_link.normalize(core.link);
     }
@@ -153,10 +152,7 @@ export default class D3SitemapNode {
                 return d.background.color;
             })
             .attr('stroke', (d) => { return d.border.color; })
-            .attr('stroke-width', (d) => { return d.border.width; })
-            .style("filter", (d) => {
-                return (d.type==='NODE') ? 'url(#drop-shadow)' : '';
-            });
+            .attr('stroke-width', (d) => { return d.border.width; });
     }
     drawLabel (groups) {
         groups
@@ -181,56 +177,6 @@ export default class D3SitemapNode {
                 return d.label.contents;
             })
         ;
-    }
-    drawIcon (groups) {
-        let icon_groups = groups
-            .append('g')
-            .attr('class', 'icon-group')
-            .attr("transform", (d) => {
-                return "translate(" +
-                    (d.size.w - 24 - 20) + "," +
-                    15 +
-                    ")";
-            });
-
-        icon_groups
-            .append('rect')
-            .attr('class', 'node-body')
-            .attr('width', (d) => { return 18;})
-            .attr('height', (d) => { return 24;})
-            .attr('x', (d) => { return 6;})
-            .attr('y', (d) => { return 0;})
-            .attr('fill', (d) => {
-                return '#fff';
-            })
-            .attr('stroke', (d) => { return '#333'; })
-            .attr('stroke-width', (d) => { return 1; });
-
-        icon_groups
-            .append('rect')
-            .attr('class', 'node-body')
-            .attr('width', (d) => { return 12;})
-            .attr('height', (d) => { return 6;})
-            .attr('x', (d) => { return 0;})
-            .attr('y', (d) => { return 3;})
-            .attr('fill', (d) => {
-                return '#fff';
-            })
-            .attr('stroke', (d) => { return '#333'; })
-            .attr('stroke-width', (d) => { return 1; });
-
-        icon_groups
-            .append('rect')
-            .attr('class', 'node-body')
-            .attr('width', (d) => { return 12;})
-            .attr('height', (d) => { return 6;})
-            .attr('x', (d) => { return 0;})
-            .attr('y', (d) => { return 15;})
-            .attr('fill', (d) => {
-                return '#fff';
-            })
-            .attr('stroke', (d) => { return '#333'; })
-            .attr('stroke-width', (d) => { return 1; });
     }
     drawLink (groups) {
         let a_element = groups
@@ -284,30 +230,11 @@ export default class D3SitemapNode {
                 return 'link';
             });
     }
-    drawComponent (place, data) {
-        let groups = this.drawGroup(place, data, 'component');
-
-        this.drawBody(groups, data);
-        this.drawIcon(groups, data);
-        this.drawLabel(groups, data);
-        this.drawLink(groups, data);
-    }
-    drawNode (place, data) {
+    draw (place, data) {
         let groups = this.drawGroup(place, data, 'node');
 
         this.drawBody(groups, data);
         this.drawLabel(groups, data);
         this.drawLink(groups, data);
-    }
-    draw (place, data) {
-        if (data.type==='NODE') {
-            this.drawNode(place, data);
-            return;
-        }
-
-        if (data.type==='COMPONENT') {
-            this.drawComponent(place, data);
-            return;
-        }
     }
 }
