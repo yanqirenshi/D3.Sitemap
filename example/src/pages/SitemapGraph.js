@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import D3Sitemap from '../js/D3Sitemap.js';
 
+import Asshole from '@yanqirenshi/assh0le';
+
 import NODE_DATA from '../data/NODE_DATA.js';
 import EDGE_DATA from '../data/EDGE_DATA.js';
 
