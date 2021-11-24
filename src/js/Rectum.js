@@ -8,8 +8,8 @@ import Edge from './Edge.js';
 import Port from './Port.js';
 
 export default class Rectum extends Colon {
-    constructor () {
-        super();
+    constructor (options) {
+        super(options);
 
         this.id_counter = 1;
 

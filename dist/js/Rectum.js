@@ -56,12 +56,12 @@ var Rectum = /*#__PURE__*/function (_Colon) {
 
   var _super = _createSuper(Rectum);
 
-  function Rectum() {
+  function Rectum(options) {
     var _this;
 
     _classCallCheck(this, Rectum);
 
-    _this = _super.call(this);
+    _this = _super.call(this, options);
     _this.id_counter = 1;
     _this._calculator = new _Drawer.DrawerGeometry();
     _this._drawer = new _Drawer.DrawerHierarchy();
